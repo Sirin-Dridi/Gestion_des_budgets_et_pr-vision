@@ -10,14 +10,24 @@ public class LigneBudgetaire
         private decimal montantPrevu;
         private decimal montantRealise;
 
-        public int IdLigne { get { return idLigne; } }
-        public string Categorie { get { return categorie; } }
+        public int IdLigne { get { return idLigne; } private set { idLigne = value; } }
+        public string Categorie { get { return categorie; } private set { categorie = value; } }
         public decimal MontantPrevu { get { return montantPrevu; } set { montantPrevu = value; } }
         public decimal MontantRealise { get { return montantRealise; } }
         public Budget Budget { get; set; }
         public List<Transaction> Transactions { get; set; }
         public List<Ecart> Ecarts { get; set; }
         public List<Ajustement> Ajustements { get; set; }
+
+        private LigneBudgetaire() : this(0, "", 0)
+        {
+        }
+
+        internal void ModifierDetails(string nom, decimal montant)
+        {
+            Categorie = nom;
+            MontantPrevu = montant;
+        }
 
         public LigneBudgetaire(int id, string categorie, decimal montantPrevu)
         {
@@ -27,6 +37,16 @@ public class LigneBudgetaire
             Transactions = new List<Transaction>();
             Ecarts = new List<Ecart>();
             Ajustements = new List<Ajustement>();
+        }
+
+        public void AjusterMontant(decimal montant, string motif)
+        {
+            if (montant == MontantPrevu)
+                return;
+
+            actualiserMontantRealise();
+            var ajustement = new Ajustement(0, this, calculerEcart(), montant, motif);
+            ajustement.appliquer();
         }
 
         public void actualiserMontantRealise()
@@ -55,3 +75,4 @@ public class LigneBudgetaire
         }
     }
 }
+

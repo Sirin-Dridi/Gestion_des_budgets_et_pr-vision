@@ -1,52 +1,15 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{9E9424E0-1BB0-4E8A-9A25-DCD0093E81B2}</ProjectGuid>
-    <OutputType>Exe</OutputType>
-    <RootNamespace>GestionBudgets</RootNamespace>
-    <AssemblyName>GestionBudgets</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
-    <LangVersion>7.3</LangVersion>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="10.0.14" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.14">
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
   </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Modeles\Administrateur.cs" />
-    <Compile Include="Modeles\Ajustement.cs" />
-    <Compile Include="Modeles\Alerte.cs" />
-    <Compile Include="Modeles\Budget.cs" />
-    <Compile Include="Modeles\Directeur.cs" />
-    <Compile Include="Modeles\Ecart.cs" />
-    <Compile Include="Modeles\Enums.cs" />
-    <Compile Include="Modeles\Gestionnaire.cs" />
-    <Compile Include="Modeles\Justificatif.cs" />
-    <Compile Include="Modeles\LigneBudgetaire.cs" />
-    <Compile Include="Modeles\MethodePrevision.cs" />
-    <Compile Include="Modeles\Prevision.cs" />
-    <Compile Include="Modeles\Rapport.cs" />
-    <Compile Include="Modeles\TableauDeBord.cs" />
-    <Compile Include="Modeles\Transaction.cs" />
-    <Compile Include="Modeles\Utilisateur.cs" />
-    <Compile Include="Modeles\Validation.cs" />
-    <Compile Include="Program.cs" />
-    <Compile Include="Services\ServiceAlerte.cs" />
-    <Compile Include="Services\ServicePrevision.cs" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
+

@@ -12,17 +12,28 @@ public class Budget
         private DateTime dateFin;
         private StatutBudget statut;
 
-        public int IdBudget { get { return idBudget; } }
+        public int IdBudget { get { return idBudget; } private set { idBudget = value; } }
         public string Libelle { get { return libelle; } set { libelle = value; } }
         public decimal MontantTotal { get { return montantTotal; } }
         public StatutBudget Statut { get { return statut; } set { statut = value; } }
-        public DateTime DateDebut { get { return dateDebut; } }
-        public DateTime DateFin { get { return dateFin; } }
+        public DateTime DateDebut { get { return dateDebut; } private set { dateDebut = value; } }
+        public DateTime DateFin { get { return dateFin; } private set { dateFin = value; } }
         public Gestionnaire Gestionnaire { get; set; }
         public List<LigneBudgetaire> Lignes { get; set; }
         public List<Prevision> Previsions { get; set; }
         public List<Validation> Validations { get; set; }
         public List<Rapport> Rapports { get; set; }
+
+        private Budget() : this(0, "", default, default)
+        {
+        }
+
+        internal void ModifierDetails(string nom, DateTime debut, DateTime fin)
+        {
+            modifier(nom);
+            DateDebut = debut;
+            DateFin = fin;
+        }
 
         public Budget(int id, string libelle, DateTime debut, DateTime fin)
         {

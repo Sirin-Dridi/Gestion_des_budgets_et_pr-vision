@@ -19,6 +19,16 @@ public class Transaction
         public LigneBudgetaire Ligne { get; set; }
         public List<Justificatif> Justificatifs { get; set; }
 
+        private Transaction() : this(0, 0, "", TypeTransaction.DEPENSE)
+        {
+        }
+
+        public Transaction(decimal montant, string description, DateTime date)
+            : this(0, montant, description, TypeTransaction.DEPENSE)
+        {
+            dateTransaction = date.Date;
+        }
+
         public Transaction(int id, decimal montant, string description, TypeTransaction type)
         {
             idTransaction = id;
@@ -62,3 +72,4 @@ public class Transaction
         }
     }
 }
+

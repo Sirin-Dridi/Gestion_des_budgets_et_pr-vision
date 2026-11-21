@@ -1,39 +1,27 @@
-using System;
-using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 
-namespace GestionBudgets
+namespace GestionBudgets;
+
+internal static class Program
 {
-class Program
+    [STAThread]
+    private static void Main()
     {
-        static void Main(string[] args)
+        ApplicationConfiguration.Initialize();
+        try
         {
-            Gestionnaire gestionnaire = new Gestionnaire(1, "sirin", "amine@email.com", "exempleHash");
-            Directeur directeur = new Directeur(2, "Sonia", "sonia@email.com", "exempleHash");
-
-            Budget budget = gestionnaire.creerBudget(1, "Budget annuel", new DateTime(2026, 1, 1), new DateTime(2026, 12, 31));
-            LigneBudgetaire ligne = new LigneBudgetaire(1, "Matériel", 10000);
-            budget.ajouterLigne(ligne);
-
-            budget.soumettreValidation();
-            directeur.validerBudget(1, budget, true);
-
-            Transaction transaction = new Transaction(1, 13000, "Achat de matériel", TypeTransaction.DEPENSE);
-            gestionnaire.saisirTransaction(ligne, transaction);
-
-            Ecart ecart = ligne.calculerEcart();
-            Console.WriteLine("Budget : " + budget.Libelle);
-            Console.WriteLine("Statut : " + budget.Statut);
-            Console.WriteLine("Écart : " + ecart.Difference + " DT");
-
-            ServiceAlerte service = new ServiceAlerte();
-            if (service.verifierSeuil(ecart, 10))
-            {
-                Alerte alerte = service.creerAlerte(1, ecart);
-                service.notifier(alerte, gestionnaire);
-                Console.WriteLine(alerte.Message);
-            }
-
-            Console.ReadKey();
+            Directory.CreateDirectory(Path.GetDirectoryName(BudgetContext.CheminBase));
+            using var contexte = new BudgetContext();
+            contexte.Database.Migrate();
         }
+        catch (Exception erreur)
+        {
+            MessageBox.Show($"Impossible d'ouvrir la base de données.\n\n{erreur.Message}",
+                "Gestion des budgets", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return;
+        }
+
+        Application.Run(new ListeBudgetsForm());
     }
 }
+

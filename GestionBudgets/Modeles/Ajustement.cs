@@ -14,10 +14,20 @@ public class Ajustement
         public LigneBudgetaire Ligne { get; set; }
         public Ecart Ecart { get; set; }
 
+        public int IdAjustement => idAjustement;
+        public DateTime DateAjustement => dateAjustement;
+        public decimal AncienMontant => ancienMontant;
+        public decimal NouveauMontant => nouveauMontant;
+        public string Motif => motif;
+
+        private Ajustement()
+        {
+        }
+
         public Ajustement(int id, LigneBudgetaire ligne, Ecart ecart, decimal nouveau, string motif)
         {
             idAjustement = id;
-            dateAjustement = DateTime.Today;
+            dateAjustement = DateTime.Now;
             Ligne = ligne;
             Ecart = ecart;
             ancienMontant = ligne.MontantPrevu;
@@ -42,3 +52,4 @@ public class Ajustement
         }
     }
 }
+
